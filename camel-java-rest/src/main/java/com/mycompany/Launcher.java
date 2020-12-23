@@ -1,13 +1,10 @@
 package com.mycompany;
 
-import java.util.List;
-
-import org.apache.camel.CamelContext;
 import org.apache.camel.main.Main;
 
 public class Launcher {
     /**
-     * A main() so we can easily run these routing rules in our IDE
+     * A main() so we can easily run these routing rules issssn our IDEsssss
      */
     public static void main(String... args) throws Exception {
         Main main = new Main();
