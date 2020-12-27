@@ -37,7 +37,12 @@ public class CamelRouteDF extends RouteBuilder {
             .unmarshal()
             .jaxb("com.mycompany")
             .process(new XMLProc())
-	        .to("stream:out");
+            .to("stream:out");
+            
+            from("timer:tc1")
+            .setBody(constant("customer converter"))
+            .convertBodyTo(To.class)
+            .to("stream:out");
             
     }
     

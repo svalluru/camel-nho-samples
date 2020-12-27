@@ -10,6 +10,8 @@ public class Launcher {
         Main main = new Main();
         main.addRouteBuilder(new CamelRoute());
         main.addRouteBuilder(new CamelRouteDF());
+
         main.run(args);
+
     }
 }
