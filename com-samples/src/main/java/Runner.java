@@ -16,7 +16,10 @@ public class Runner {
         pt = ctx.createProducerTemplate();
         pt.requestBody("direct:callTransform", "Hello Sri");
         pt.requestBody("direct:callProcessor", "Hello Val");
-        
-        
+        pt.requestBody("direct:callBean", "Test bean");
+        pt.requestBody("direct:callPollEnrich", "Calling PollEnrich bean");
+        pt.requestBody("direct:callEnrich", "Calling Enrich bean");
+
+
     }
 }

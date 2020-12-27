@@ -9,8 +9,7 @@ public class DataBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:callTransform")
-        .transform(new Expression() {
+        from("direct:callTransform").transform(new Expression() {
             public <T> T evaluate(Exchange exchange, Class<T> type) {
 
                 String s = exchange.getIn().getBody(String.class);
@@ -18,16 +17,31 @@ public class DataBuilder extends RouteBuilder {
             }
         }).to("stream:out");
 
-        from("direct:callProcessor")
-            .process(new Processor() {
+        from("direct:callProcessor").process(new Processor() {
 
             public void process(Exchange exchange) throws Exception {
                 String s = exchange.getIn().getBody(String.class);
                 exchange.getIn().setBody(s.concat("..Welcome to Red Hat"));
             }
 
-        }).to("stream:out");
+        }).to("stream:out");    
 
-    }
+        from("direct:callBean")
+        .transform(method(new Mybean(), "setName"))
+        //.bean(Mybean.class)
+        .to("stream:out");
+
+        from("direct:callPollEnrich")
+        .pollEnrich("file:/Users/svalluru/tmp?fileName=text.txt", new MyAggregationStrategy())
+        .to("stream:out");
+
+        from("direct:callEnrich")
+        .enrich("file:/Users/svalluru/tmp?fileName=test.txt", new MyAggregationStrategy())
+        .to("stream:out");
+        
 
 }
+
+}
+
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com-samples</name>
+	<name>com.samples.xmljson</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -54,7 +54,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1608948912113</id>
+			<id>1608952858437</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
