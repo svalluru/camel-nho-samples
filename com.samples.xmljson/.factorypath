@@ -53,9 +53,13 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/io/swagger/swagger-parser/1.0.33/swagger-parser-1.0.33.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/slf4j/slf4j-ext/1.7.22.redhat-2/slf4j-ext-1.7.22.redhat-2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.5.0.redhat-3/commons-io-2.5.0.redhat-3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/camel/camel-json-validator/2.21.0.fuse-770013-redhat-00001/camel-json-validator-2.21.0.fuse-770013-redhat-00001.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/networknt/json-schema-validator/0.1.16/json-schema-validator-0.1.16.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/camel/camel-crypto/2.21.0.fuse-770013-redhat-00001/camel-crypto-2.21.0.fuse-770013-redhat-00001.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-codec/commons-codec/1.13/commons-codec-1.13.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/bouncycastle/bcprov-jdk15on/1.65/bcprov-jdk15on-1.65.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.5.0.redhat-3/commons-io-2.5.0.redhat-3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/camel/camel-swagger/2.21.0.fuse-770013-redhat-00001/camel-swagger-2.21.0.fuse-770013-redhat-00001.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/wordnik/swagger-annotations/1.3.12/swagger-annotations-1.3.12.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7.jar" enabled="true" runInBatchMode="false"/>
