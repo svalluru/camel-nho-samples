@@ -50,6 +50,27 @@
   <groupId>org.apache.camel</groupId>
   <artifactId>camel-stream</artifactId>
 </dependency>
+    <dependency>
+  <groupId>org.apache.camel</groupId>
+  <artifactId>camel-jetty</artifactId>
+</dependency>
+<dependency>
+    <groupId>javax.mail</groupId>
+    <artifactId>javax.mail-api</artifactId>
+    <version>1.5.5.redhat-1</version>
+</dependency>
+<dependency>
+  <groupId>org.apache.camel</groupId>
+  <artifactId>camel-jackson</artifactId>
+</dependency>
+<dependency>
+<dependency>
+    <groupId>org.apache.camel</groupId>
+    <artifactId>camel-attachments</artifactId>
+</dependency>
+  <groupId>org.apache.camel</groupId>
+  <artifactId>camel-mail</artifactId>
+</dependency>
 <dependency>
   <groupId>org.apache.camel</groupId>
   <artifactId>camel-xstream</artifactId>
