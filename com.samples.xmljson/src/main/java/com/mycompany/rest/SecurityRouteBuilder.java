@@ -17,6 +17,9 @@ public class SecurityRouteBuilder extends RouteBuilder {
         .unmarshal(cryptoFormat)
                 .to("stream:out");
 
+        from("direct:callStatic")
+        .log("random value " + Math.random())
+        .to("stream:out");        
     }
 
 }

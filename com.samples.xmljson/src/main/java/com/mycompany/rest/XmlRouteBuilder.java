@@ -27,9 +27,42 @@ public class XmlRouteBuilder extends RouteBuilder {
         })
         . recipientList(constant("stream:out,validator:classpath:myxmlschema.xsd"));
 
+        from("file:/Users/svalluru/tmp?fileName=sample_input.xml&noop=true")
+        .log("read file")
+        .split(xpath("/company/employee"), new MyOrderStrategy())//.xpath("/company/employee").aggregate(new MyOrderStrategy())
+        .parallelProcessing()
+        .wireTap("direct:wtap")
+       .log("===========start============")
+        .to("direct:processCompany")
+        .log("===========end============")
+        .end()
+        .to("direct:print");
 
+        from("direct:processCompany")
+       // .throttle(1)
+      //  .timePeriodMillis(3000)
+       // .log(String.valueOf(System.currentTimeMillis()))
+       .process(new Processor(){
 
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        // TODO Auto-generated method stub
+                        String body = exchange.getIn().getBody(String.class);
+                        Thread.sleep(5000);
+                        exchange.getIn().setBody( body + "Adding!!!!!!!!!!!!!");
 
+                    }
+           
+       })
+        .to("stream:out");
+
+        from("direct:print")
+        .to("file:/Users/svalluru/tmp?fileName=sample_output.xml");
+
+        from("direct:wtap")
+        .log("wtap")
+        .to("file:/Users/svalluru/tmp?fileName="+ Math.random() +".xml");
+        //.to("stream:out");
     }
     
 }

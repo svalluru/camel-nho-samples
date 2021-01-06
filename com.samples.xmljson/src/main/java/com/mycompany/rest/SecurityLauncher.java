@@ -22,6 +22,7 @@ public class SecurityLauncher {
 
         ProducerTemplate pt = ctx.createProducerTemplate();
         pt.requestBody("direct:basic-encryption", "hello Direct VM");
+        pt.requestBody("direct:callStatic", "hello Direct VM");
 
         TimeUnit.MINUTES.sleep(5);
 
