@@ -24,6 +24,24 @@ public class JDBCCompBuilder extends RouteBuilder {
         .outType(DMOutput.class)
         .consumes("application/json").produces("application/json").to("direct:checkReboot");
 
+
+        from("direct:processHosts")
+        .process(new Processor(){
+			@Override
+			public void process(Exchange exchange) throws Exception {
+                //HttpMessage msg = (HttpMessage) exchange.getIn().getBody(DMInput.class);
+                DMInput dmIn = (DMInput) exchange.getIn().getBody(DMInput.class);
+                Hosts[] hosts = dmIn.getHosts();
+                for (Hosts host : hosts) {
+                    String sqlstr = "select * from Reboot where Host='"+host.getHost()+"'";
+                    exchange.getIn().setBody(sqlstr);
+                }
+                //String str = msg.getRequest().getParameter("host");
+               // DMInput dmIn = (DMInput) msg.getBody(DMInput.class);
+			}
+        });
+
+
         from("direct:checkReboot")
         .process(new Processor(){
 			@Override
@@ -33,7 +51,7 @@ public class JDBCCompBuilder extends RouteBuilder {
                 //String str = msg.getRequest().getParameter("host");
                // DMInput dmIn = (DMInput) msg.getBody(DMInput.class);
                 String sqlstr = "select * from Reboot where Host='"+dmIn.getHosts()[0].getHost()+"'";
-                //exchange.setProperty("HOST_VALUE", sqlstr);
+                System.setProperty("HOST_VALUE", dmIn.getHosts()[0].getHost());
                 exchange.getIn().setBody(sqlstr);
 			}
         })
@@ -45,6 +63,15 @@ public class JDBCCompBuilder extends RouteBuilder {
                 ProducerTemplate template = exchange.getContext().createProducerTemplate();
 
                 List<HashMap<String, Object>> dbResult= (List<HashMap<String, Object>>) exchange.getIn().getBody();
+
+                if(dbResult != null && dbResult.size() == 0){
+                    DMOutput out = new DMOutput();
+                    out.setHost(System.getProperty("HOST_VALUE"));
+                    out.setRestartCount(1);
+                    out.setTimeStamp(new Timestamp(System.currentTimeMillis()).toString());
+                    template.sendBody("direct:newReboot", out);
+                    exchange.getIn().setBody(out);
+                }
                 
                 for (HashMap<String,Object> hashMap : dbResult) {
                         Timestamp lastRebootVal = (Timestamp) hashMap.get("LastRebootTime");
@@ -57,26 +84,40 @@ public class JDBCCompBuilder extends RouteBuilder {
 
                         //Future<Object> future = template.asyncRequestBody("jetty://http://0.0.0.0/myservice?rebootTime="+lastRebootVal, "hello");
                         //String response = template.extractFutureBody(future, String.class);
+
                         boolean restartRequired = true;
                         if(restartRequired){
                             DMOutput out = new DMOutput();
                             out.setHost(host);
                             out.setRestartCount(restartCount++);
-                            out.setTimeStamp(String.valueOf(System.currentTimeMillis()));
+                            out.setTimeStamp(new Timestamp(System.currentTimeMillis()).toString());
+
+                            //template.asyncSendBody("direct:updateDB", out);
+
                                  
                         }else{
                             DMOutput dmOut = new DMOutput();
                             dmOut.setHost(host);
                             dmOut.setRestart(false);
                             dmOut.setAlertOps(true);
-
                             exchange.getIn().setBody(dmOut);
                         }
-                      //  template.asyncSendBody("direct:callDMAPI", lastRebootVal);
                 }
                 
 			}
         });
+
+        from("direct:newReboot")
+        .process(new Processor(){
+			@Override
+			public void process(Exchange exchange) throws Exception {
+                DMOutput dmOut = (DMOutput) exchange.getIn().getBody(DMOutput.class);
+               String sqlstr = "insert into Reboot values('"+dmOut.getHost()+"',"+dmOut.getRestartCount()+",'"+dmOut.getTimeStamp()+"',"+dmOut.isAlertOps()+","+ dmOut.isRestart()+");";
+               System.out.println(sqlstr);
+                exchange.getIn().setBody(sqlstr);
+			}
+        })
+        .to("jdbc:mysqldb");
 
         from("direct:updateRestart")
         .process(new Processor(){
