@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping https://dozermapper.github.io/schema/bean-mapping.xsd">
+    <configuration>
+        <wildcard>false</wildcard>
+    </configuration>
+    <mapping>
+        <class-a>javax.swing.text.ZoneView</class-a>
+        <class-b>javax.swing.text.ZoneView</class-b>
+        <field>
+            <a>majorSpan</a>
+            <b>majorSpan</b>
+        </field>
+    </mapping>
+</mappings>

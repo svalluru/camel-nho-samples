@@ -25,9 +25,11 @@ public class RestRouteBuilder extends RouteBuilder {
                 .responseMessage().code(500).responseModel(String.class).endResponseMessage()
                 .to("direct:upload");
 
-        rest("/info").get().consumes("application/json").to("direct:ac");
+        rest("/info").get()
+        .consumes("application/json").to("direct:ac");
 
-        from("direct:ac").log("test").setBody().simple("hello test");
+        from("direct:ac").log("test")
+        .setBody().simple("hello test");
 
         from("direct:upload")
        // .unmarshal().json(JsonLibrary.Fastjson)

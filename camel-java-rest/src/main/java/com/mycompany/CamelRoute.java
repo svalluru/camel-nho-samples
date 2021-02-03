@@ -15,15 +15,20 @@ public class CamelRoute extends RouteBuilder {
 		res.setCode("201");
 		res.setMessage("custom response");
 		res.message("hello");
-		restConfiguration().component("jetty").host("localhost").port(8976).bindingMode(RestBindingMode.json).apiContextPath("/api-doc")
+
+		restConfiguration().component("jetty").host("localhost").port(8976)
+		.bindingMode(RestBindingMode.auto)
+		.apiContextPath("/api-doc")
 		.apiProperty("api.property", "User API")
 		.apiProperty("cors", "true");
 		
-		from("rest:GET:hello").transform().constant("Hello sri");
-		
 		rest("/sayHello")
-		.get().consumes("application/json").responseMessage(res).toD("direct:${header.h1}"); // dynamic to
+		.get().consumes("application/json")
+		.responseMessage(res).toD("direct:${header.h1}"); // dynamic to
 		
+
+		from("rest:GET:hello").transform().constant("Hello sri");
+
 		from("direct:ac")
 		.log("test").setBody().simple("hello test");;
 		
@@ -46,6 +51,10 @@ public class CamelRoute extends RouteBuilder {
 	                    .bean(new UserService(), "livesWhere");
 		
 		System.out.println("config1");
+		
+		from("timer:foo?period=1000")
+		.setBody(constant("Hello World"))
+		.to("stream:out");
 		
 	}
 }

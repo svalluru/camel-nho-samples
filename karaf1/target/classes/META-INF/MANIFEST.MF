@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1611381878121
+Build-Jdk: 11.0.9
+Built-By: svalluru
+Bundle-Blueprint: OSGI-INF/blueprint/blueprint.xml
+Bundle-Description: Empty Camel Blueprint Example
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.html
+Bundle-ManifestVersion: 2
+Bundle-Name: Empty Camel Blueprint Example [karaf1]
+Bundle-SymbolicName: karaf1
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Import-Package: org.osgi.service.blueprint;version="[1.0.0,2.0.0)"
+Tool: Bnd-3.2.0.201605172007

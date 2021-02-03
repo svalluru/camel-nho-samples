@@ -1,0 +1,8 @@
+<camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+
+  <route id="route1">
+    <from uri="timer:timer-1" id="timer-1"/>
+    <log message="hello" id="log-2"/>
+  </route>
+
+</camelContext>
