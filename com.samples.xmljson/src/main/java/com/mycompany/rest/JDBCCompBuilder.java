@@ -1,6 +1,7 @@
 package com.mycompany.rest;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -8,6 +9,7 @@ import java.util.concurrent.Future;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.ExchangeBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.common.HttpMessage;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -22,7 +24,9 @@ public class JDBCCompBuilder extends RouteBuilder {
         rest("/host").post("/reboot")
         .type(DMInput.class)
         .outType(DMOutput.class)
-        .consumes("application/json").produces("application/json").to("direct:checkReboot");
+        .consumes("application/json").produces("application/json")
+        //.to("direct:checkReboot");
+        .to("direct:processHosts");
 
 
         from("direct:processHosts")
@@ -32,18 +36,35 @@ public class JDBCCompBuilder extends RouteBuilder {
                 //HttpMessage msg = (HttpMessage) exchange.getIn().getBody(DMInput.class);
                 DMInput dmIn = (DMInput) exchange.getIn().getBody(DMInput.class);
                 Hosts[] hosts = dmIn.getHosts();
+                ProducerTemplate template = exchange.getContext().createProducerTemplate();
+                List<DMOutput> dmList =  new ArrayList<DMOutput>();
+
+
                 for (Hosts host : hosts) {
                     String sqlstr = "select * from Reboot where Host='"+host.getHost()+"'";
-                    exchange.getIn().setBody(sqlstr);
+                    //exchange.getIn().setBody(sqlstr);
+                    Object requestBody =  template.requestBody("direct:callJDBC", sqlstr);
+
+                  //  DMOutput dmOut =  (DMOutput) template.requestBody("direct:checkReboot", requestBody);
+
+                  ExchangeBuilder anExchange = ExchangeBuilder.anExchange(exchange.getContext());
+                  //anExchange.withBody(requestBody);
+                  DMProc dm =  new DMProc();
+                  dm.setBody(requestBody);
+                  dm.process(anExchange.build());
+                  Exchange request = template.request("direct:checkReboot", dm);
+                  dmList.add((DMOutput) request.getIn().getBody());  
+                    System.out.println(request);
                 }
+                exchange.getIn().setBody(dmList);
                 //String str = msg.getRequest().getParameter("host");
                // DMInput dmIn = (DMInput) msg.getBody(DMInput.class);
 			}
         });
 
 
-        from("direct:checkReboot")
-        .process(new Processor(){
+        from("direct:callJDBC")
+   /*     .process(new Processor(){
 			@Override
 			public void process(Exchange exchange) throws Exception {
                 //HttpMessage msg = (HttpMessage) exchange.getIn().getBody(DMInput.class);
@@ -54,9 +75,11 @@ public class JDBCCompBuilder extends RouteBuilder {
                 System.setProperty("HOST_VALUE", dmIn.getHosts()[0].getHost());
                 exchange.getIn().setBody(sqlstr);
 			}
-        })
+        })*/
         //.setBody(constant(exchangeProperty("HOST_VALUE")))
-        .to("jdbc:mysqldb")
+        .to("jdbc:mysqldb");
+        
+        from("direct:checkReboot")
         .process(new Processor(){
 			@Override
 			public void process(Exchange exchange) throws Exception {
@@ -91,7 +114,7 @@ public class JDBCCompBuilder extends RouteBuilder {
                             out.setHost(host);
                             out.setRestartCount(restartCount++);
                             out.setTimeStamp(new Timestamp(System.currentTimeMillis()).toString());
-
+                            exchange.getIn().setBody(out);
                             //template.asyncSendBody("direct:updateDB", out);
 
                                  
