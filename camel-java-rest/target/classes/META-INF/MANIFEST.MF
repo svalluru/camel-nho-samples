@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1611347160831
+Bnd-LastModified: 1612465292684
 Build-Jdk: 11.0.9
 Built-By: svalluru
 Bundle-Description: Camel Java DSL Example

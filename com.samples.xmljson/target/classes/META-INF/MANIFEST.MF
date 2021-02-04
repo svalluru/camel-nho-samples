@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1612465319825
+Build-Jdk: 11.0.9
+Built-By: svalluru
+Bundle-Description: Camel Java DSL Example
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.html
+Bundle-ManifestVersion: 2
+Bundle-Name: Camel Java DSL Example [com.samples.xmljson]
+Bundle-SymbolicName: comsamplesxmljson
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.mycompany;uses:="javax.xml.bind.annotation,org.apach
+ e.camel,org.apache.camel.builder,org.apache.camel.support";version="1.0
+ .0",com.mycompany.rest;uses:="org.apache.camel,org.apache.camel.builder
+ ,org.apache.camel.processor.aggregate";version="1.0.0"
+Import-Package: com.thoughtworks.xstream;version="[1.4,2)",javax.activat
+ ion;version="[1.2,2)",javax.crypto,javax.xml.bind.annotation;version="[
+ 2.3,3)",org.apache.camel;version="[2.21,3)",org.apache.camel.builder;ve
+ rsion="[2.21,3)",org.apache.camel.builder.xml;version="[2.21,3)",org.ap
+ ache.camel.converter.jaxb;version="[2.21,3)",org.apache.camel.dataforma
+ t.xstream;version="[2.21,3)",org.apache.camel.impl;version="[2.21,3)",o
+ rg.apache.camel.main;version="[2.21,3)",org.apache.camel.model;version=
+ "[2.21,3)",org.apache.camel.model.dataformat;version="[2.21,3)",org.apa
+ che.camel.model.rest;version="[2.21,3)",org.apache.camel.processor.aggr
+ egate;version="[2.21,3)",org.apache.camel.spi;version="[2.21,3)",org.ap
+ ache.camel.support;version="[2.21,3)",org.apache.commons.dbcp;version="
+ [1.4,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.2.0.201605172007
