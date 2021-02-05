@@ -1,7 +1,9 @@
 package com.host.att.json.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Command{
 	
     public Insert insert;

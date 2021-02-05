@@ -14,11 +14,11 @@ public class RebootDM{
 	public void setRestart(String restart) {
 		this.restart = restart;
 	}
-	public int getRestartedOn() {
-		return restartedOn;
+	public int getRestartedMin() {
+		return restartedMin;
 	}
-	public void setRestartedOn(int restartedOn) {
-		this.restartedOn = restartedOn;
+	public void setRestartedMin(int restartedMin) {
+		this.restartedMin = restartedMin;
 	}
 	public int getRestartCount() {
 		return restartCount;
@@ -33,7 +33,7 @@ public class RebootDM{
 		this.alertOps = alertOps;
 	}
 	public String restart;
-    public int restartedOn;
+    public int restartedMin;
     public int restartCount;
     public String alertOps;
 }
